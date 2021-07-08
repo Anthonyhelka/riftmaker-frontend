@@ -1,0 +1,31 @@
+.leaderboard-container {
+  .l-summoners {
+    height: 375px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    .l-summoner {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.1s ease-in;
+      cursor: pointer;
+      .l-summoner-champion {
+        height: 100%;
+        margin-left: 15px;
+      }
+      .l-summoner-spectate {
+        margin-left: 15px;
+      }
+    }
+    .unknown {
+      background-color: lightblue;
+    }
+    .false {
+      background-color: lightcoral;
+    }
+    .true {
+      background-color: lightgreen;
+    }
+  }
+}

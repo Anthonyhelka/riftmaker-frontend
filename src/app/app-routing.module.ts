@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
+import { LeaderboardComponent } from './pages/leaderboard/leaderboard.component';
 import { SummonerComponent } from './pages/summoner/summoner.component';
 import { WhoopsComponent } from './pages/whoops/whoops.component';
 
@@ -9,6 +10,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, pathMatch: 'full' },
   { path: 'summoner', component: HomeComponent },
   { path: 'summoner/:path', component: SummonerComponent },
+  { path: 'leaderboard', component: LeaderboardComponent },
   { path: 'whoops' , component: WhoopsComponent },
   { path: '**', redirectTo: '/whoops' }
 ];

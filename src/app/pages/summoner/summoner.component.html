@@ -1,3 +1,12 @@
 <div class="summoner-container">
-  Summoner Name: {{ name }}
+  <ng-container *ngIf="loading">Loading...</ng-container>
+
+  <ng-container *ngIf="!loading">
+    <div>{{ name }}</div>
+    <div>{{ wins }}W / {{ losses }}L</div>
+    <div>{{ rank.tier }} {{ rank.division }}</div>
+    <div>LP: {{ rank.leaguePoints }}</div>
+    <br>
+    <div>Load Time: {{ loadTime }} Seconds</div>
+  </ng-container>
 </div>

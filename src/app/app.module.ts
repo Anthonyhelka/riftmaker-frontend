@@ -9,6 +9,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { SummonerComponent } from './pages/summoner/summoner.component';
 import { WhoopsComponent } from './pages/whoops/whoops.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LeaderboardComponent } from './pages/leaderboard/leaderboard.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
     FooterComponent,
     HomeComponent,
     SummonerComponent,
-    WhoopsComponent
+    WhoopsComponent,
+    LeaderboardComponent
   ],
   imports: [
     BrowserModule,
