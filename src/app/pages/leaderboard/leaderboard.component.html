@@ -2,17 +2,22 @@
   <ng-container *ngIf="loading">Loading...</ng-container>
 
   <ng-container *ngIf="!loading">
-    <div>LOAD TIME: {{ loadTime }}</div>
+    <div>LOAD TIME: {{ loadTime }}<ng-container *ngIf="updating"> /// Updating...</ng-container></div>
+    <div>Last Updated: {{ lastUpdated | date: 'short' }}</div>
     <br>
     <div class="l-summoners">
       <div
         *ngFor="let summoner of summoners; let i = index;"
         class="l-summoner"
-        [ngClass]="{ 'unknown': summoner.activeGame === 0, 'false': summoner.activeGame === 1, 'true': summoner.activeGame === 2 }"
+        [ngClass]="{ 'false': !summoner.activeGame.status, 'true': summoner.activeGame.status }"
         (click)="getSummoner(summoner)">
         {{ i + 1 }}: {{ summoner.summonerName }}
-        <img *ngIf="summoner.activeGame === 2" class="l-summoner-champion" [src]="summoner.champion" [alt]="summoner.summonerName + ' Champion'" />
-        <button *ngIf="summoner.activeGame === 2" class="l-summoner-spectate" (click)="getSpectateFile(summoner)">Spectate</button>
+        <img
+          *ngIf="summoner.activeGame.status"
+          class="l-summoner-champion"
+          [src]="summoner.champion"
+          [alt]="summoner.summonerName + ' Champion'" />
+        <button *ngIf="summoner.activeGame.status" class="l-summoner-spectate" (click)="getSpectateFile(summoner)">Spectate</button>
       </div>
     </div>
   </ng-container>
