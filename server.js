@@ -11,4 +11,4 @@ app.get('/*', (req, res) => {
 
 app.listen(process.env.PORT || 8080);
 
-console.log('Console Listening!');
+console.log('Server Started!');
