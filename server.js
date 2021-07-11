@@ -9,6 +9,6 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname + '/dist/riftmaker-frontend/index.html'));
 });
 
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 8000);
 
 console.log('Server Started!');

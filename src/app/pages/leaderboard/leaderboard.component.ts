@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SummonerService } from 'src/app/services/summoner.service';
 import { webSocket } from 'rxjs/webSocket';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-leaderboard',
@@ -17,6 +18,8 @@ export class LeaderboardComponent implements OnInit {
   loading: boolean = false;
   loadTime: number = 0;
 
+  baseUrl = environment.baseUrl;
+
   constructor(private summonerService: SummonerService, private router: Router) { }
 
   ngOnInit(): void {
@@ -25,7 +28,7 @@ export class LeaderboardComponent implements OnInit {
   }
 
   connectWebSocket(): void {
-    let subject = webSocket('ws://localhost:8080');
+    let subject = webSocket(`ws://${this.baseUrl}`);
     subject.subscribe((message: any) => this.onMessage(message), (error: any) => this.onError(error), () => console.log('complete'));
   }
 
