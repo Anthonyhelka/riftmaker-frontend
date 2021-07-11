@@ -18,7 +18,7 @@ export class LeaderboardComponent implements OnInit {
   loading: boolean = false;
   loadTime: number = 0;
 
-  baseUrl = environment.baseUrl;
+  wsUrl = environment.wsUrl;
 
   constructor(private summonerService: SummonerService, private router: Router) { }
 
@@ -28,7 +28,7 @@ export class LeaderboardComponent implements OnInit {
   }
 
   connectWebSocket(): void {
-    let subject = webSocket(`ws://${this.baseUrl}`);
+    let subject = webSocket(`${this.wsUrl}`);
     subject.subscribe((message: any) => this.onMessage(message), (error: any) => this.onError(error), () => console.log('complete'));
   }
 
