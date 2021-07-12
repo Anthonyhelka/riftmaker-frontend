@@ -12,6 +12,7 @@ export class HomeComponent {
   constructor(private router: Router) { }
 
   onSearch() {
+    if (this.searchTerm.trim() === '') { return; }
     this.router.navigate(['summoner', this.searchTerm]);
   }
 
