@@ -7,11 +7,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+  searchTerm: string = '';
 
   constructor(private router: Router) { }
 
-  onSearch(event: any) {
-    this.router.navigate(['summoner', event.target.value]);
+  onSearch() {
+    this.router.navigate(['summoner', this.searchTerm]);
   }
 
   onSummoners() {

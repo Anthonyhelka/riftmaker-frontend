@@ -1,1 +1,18 @@
-<p>navbar works!</p>
+<div class="navbar-container">
+  <div
+    [ngClass]="{ 'hover-effect': path !== 'home' }"
+    [routerLink]="['/home']"
+    (click)="onNavigate('home')"
+    class="n-logo"><img src="./assets/images/riftmaker/full-logo.svg" alt="Riftmaker Logo"></div>
+
+  <div class="n-buttons">
+    <div
+      [ngClass]="{ 'active': path === 'home', 'hover-effect': path !== 'home' }"
+      [routerLink]="['/home']"
+      (click)="onNavigate('home')">Home</div>
+    <div
+      [ngClass]="{ 'active': path === 'leaderboard', 'hover-effect': path !== 'leaderboard' }"
+      [routerLink]="['/leaderboard']"
+      (click)="onNavigate('leaderboard')">Leaderboard</div>
+  </div>
+</div>

@@ -50,7 +50,6 @@ export class LeaderboardComponent implements OnInit {
   }
 
   getSummoners(): void {
-    this.dataLoaded = false;
     this.loading = true;
     const startTime = new Date().getTime();
     this.summonerService.getSummmoners().subscribe((resBody: any) => {
