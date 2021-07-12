@@ -1,0 +1,53 @@
+@import 'src/app/globals/colors.scss';
+@import 'src/app/globals/breakpoints.scss';
+
+.navbar-container {
+  height: 75px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px;
+  color: #FFFFFF;
+  border-bottom: 3px solid #15141b;
+  background-color: $background;
+  .n-logo {
+    display: flex;
+    img {
+      width: 150px;
+    }
+  }
+  .n-buttons {
+    display: flex;
+    div {
+      width: 100px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      border-bottom: 3px solid transparent;
+    }
+    div:last-child {
+      margin-right: 0;
+    }
+    .active {
+      border-bottom: 3px solid $purple;
+      background: linear-gradient(180deg, rgba(89, 7, 254, 0) 0%, rgba(89, 7, 254, 0.2) 100%);
+    }
+  }
+}
+
+// Media Queries
+@media screen and (max-width: $max-mobile) and (min-width: $min-mobile) {
+  .navbar-container {
+    align-items: center !important;
+    flex-direction: column !important;
+    padding: 10px 50px 0 50px !important;
+    .n-buttons {
+      width: 100% !important;
+      height: 75px !important;
+      div {
+        flex: 1 !important;
+      }
+    }
+  }
+}

@@ -1,8 +1,11 @@
 <div class="home-container">
-  <div>Riftmaker</div>
-  <input placeholder="Search for summoner..." (keyup.enter)="onSearch($event)" tabindex="0">
-  <br><br>
-  <div>
-    <button (click)="onSummoners()">Leaderboard</button>
+  <div class="h-header">SPECTATE THE BEST PLAYERS ON ANY SERVER</div>
+
+  <div class="h-subheader">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque amet mattis elit pretium, pellentesque risus mauris lectus.</div>
+
+  <div class="h-search">
+    <div class="h-search-region">NA</div>
+    <input placeholder="Search for players..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch()" tabindex="0">
+    <div class="h-search-icon hover-effect"><img src="./assets/images/icons/search.svg" alt="Search Button" (click)="onSearch()"></div>
   </div>
 </div>

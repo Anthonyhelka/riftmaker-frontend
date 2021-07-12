@@ -10,6 +10,7 @@ import { SummonerComponent } from './pages/summoner/summoner.component';
 import { WhoopsComponent } from './pages/whoops/whoops.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LeaderboardComponent } from './pages/leaderboard/leaderboard.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { LeaderboardComponent } from './pages/leaderboard/leaderboard.component'
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     HttpClientModule
   ],
   providers: [],

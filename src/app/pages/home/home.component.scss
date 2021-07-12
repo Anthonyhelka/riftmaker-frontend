@@ -1,0 +1,76 @@
+@import 'src/app/globals/colors.scss';
+@import 'src/app/globals/breakpoints.scss';
+
+.home-container {
+  height: 100vh;
+  background-image: url('../../../assets/images/home/background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  .h-header {
+    padding-top: 150px;
+    text-align: center;
+    font-family: electrolize;
+    font-size: 55px;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+  }
+  .h-subheader {
+    margin-top: 25px;
+    text-align: center;
+    color: #DADADA;
+    font-size: 20px;
+  }
+  .h-search {
+    width: 700px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    margin-top: 75px;
+    border-radius: 32px;
+    overflow: hidden;
+    background-color: #FFFFFF;
+    .h-search-region {
+      width: 100px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid #B1B1B1;
+      color: $purple;
+    }
+    input {
+      flex: 1;
+      height: 100%;
+      padding: 0 30px;
+      border: none;
+    }
+    .h-search-icon {
+      width: 75px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+// Media Queries
+@media screen and (max-width: $max-mobile) and (min-width: $min-mobile) {
+  .home-container {
+    padding: 0 20px !important;
+    background-position: center !important;
+    .h-header {
+      padding-top: 75px !important;
+      font-size: 40px !important;
+    }
+    .h-subheader {
+      margin-top: 25px !important;
+      font-size: 16px !important;
+    }
+    .h-search {
+      width: 100% !important;
+      margin-top: 50px !important;
+    }
+  }
+}
