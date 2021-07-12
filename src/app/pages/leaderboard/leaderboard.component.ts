@@ -15,6 +15,7 @@ export class LeaderboardComponent implements OnInit {
 
   updating: boolean = false;
   lastUpdated: Date = new Date();
+  dataLoaded: boolean = false;
   loading: boolean = false;
   loadTime: number = 0;
 
@@ -49,21 +50,24 @@ export class LeaderboardComponent implements OnInit {
   }
 
   getSummoners(): void {
+    this.dataLoaded = false;
     this.loading = true;
     const startTime = new Date().getTime();
     this.summonerService.getSummmoners().subscribe((resBody: any) => {
+      this.dataLoaded = true;
       this.loading = false;
       this.loadTime = (new Date().getTime() - startTime) / 1000;
       this.summoners = resBody;
       for (const summoner of this.summoners) {
         if (summoner.activeGame.status) {
-          const participant = summoner.activeGame.data.participants.find((participant: any) => participant.summonerId === summoner.summonerId);
+          const participant = summoner.activeGame.data.participants.find((item: any) => item.summonerId === summoner.summonerId);
           summoner['champion'] = `https://cdn.communitydragon.org/11.12.1/champion/${participant.championId}/square`;
           summoner['gameId'] = summoner.activeGame.data.gameId;
           summoner['observerKey'] = summoner.activeGame.data.observers.encryptionKey;
         }
       }
     }, (error: any) => {
+      this.dataLoaded = true;
       this.loading = false;
       this.loadTime = (new Date().getTime() - startTime) / 1000;
       console.log(error);
@@ -75,7 +79,8 @@ export class LeaderboardComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  getSpectateFile(summoner: any): void {
+  getSpectateFile(event: any, summoner: any): void {
+    event.stopPropagation();
     this.loading = true;
     const observerKey = summoner.observerKey.replace(/\//g, 'ForwardSlash');
     this.summonerService.getSpectateFile(summoner.gameId, observerKey).subscribe((resBody: any) => {

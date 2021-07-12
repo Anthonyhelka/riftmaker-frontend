@@ -1,7 +1,7 @@
 <div class="leaderboard-container">
-  <ng-container *ngIf="loading">Loading...</ng-container>
+  <ng-container *ngIf="!dataLoaded">Loading...</ng-container>
 
-  <ng-container *ngIf="!loading">
+  <ng-container *ngIf="dataLoaded">
     <div>LOAD TIME: {{ loadTime }}<ng-container *ngIf="updating"> /// Updating...</ng-container></div>
     <div>Last Updated: {{ lastUpdated | date: 'short' }}</div>
     <br>
@@ -17,7 +17,7 @@
           class="l-summoner-champion"
           [src]="summoner.champion"
           [alt]="summoner.summonerName + ' Champion'" />
-        <button *ngIf="summoner.activeGame.status" class="l-summoner-spectate" (click)="getSpectateFile(summoner)">Spectate</button>
+        <button *ngIf="summoner.activeGame.status" class="l-summoner-spectate" (click)="getSpectateFile($event, summoner)">Spectate</button>
       </div>
     </div>
   </ng-container>
