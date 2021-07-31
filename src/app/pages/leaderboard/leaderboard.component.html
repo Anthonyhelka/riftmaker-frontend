@@ -2,16 +2,20 @@
   <ng-container *ngIf="!dataLoaded">Loading...</ng-container>
 
   <ng-container *ngIf="dataLoaded">
-    <div>LOAD TIME: {{ loadTime }}<ng-container *ngIf="updating"> /// Updating...</ng-container></div>
+    <div><ng-container *ngIf="updating"> /// Updating...</ng-container></div>
     <div>Last Updated: {{ lastUpdated | date: 'short' }}</div>
     <br>
+    <div class="filter hover-effect" (click)="onChangeActiveGameFilter()">
+      <ng-container *ngIf="!activeGameFilter">Hide Players Not In Game</ng-container>
+      <ng-container *ngIf="activeGameFilter">Show Players Not In Game</ng-container>
+    </div>
     <div class="l-summoners">
       <div
-        *ngFor="let summoner of summoners; let i = index;"
+        *ngFor="let summoner of filteredSummoners; let i = index;"
         class="l-summoner"
         [ngClass]="{ 'false': !summoner.activeGame.status, 'true': summoner.activeGame.status }"
         (click)="getSummoner(summoner)">
-        {{ i + 1 }}: {{ summoner.summonerName }}
+        {{ summoner.position }}: {{ summoner.summonerName }}
         <img
           *ngIf="summoner.activeGame.status"
           class="l-summoner-champion"

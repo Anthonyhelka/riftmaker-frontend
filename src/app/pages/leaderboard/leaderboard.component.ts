@@ -11,8 +11,13 @@ import { environment } from 'src/environments/environment';
 })
 export class LeaderboardComponent implements OnInit {
   summoners: any[] = [];
+  filteredSummoners: any[] = [];
   summonerLimit: number = 75;
 
+  // Filters
+  activeGameFilter: boolean = false;
+
+  // Loading
   updating: boolean = false;
   lastUpdated: Date = new Date();
   dataLoaded: boolean = false;
@@ -57,14 +62,16 @@ export class LeaderboardComponent implements OnInit {
       this.loading = false;
       this.loadTime = (new Date().getTime() - startTime) / 1000;
       this.summoners = resBody;
-      for (const summoner of this.summoners) {
-        if (summoner.activeGame.status) {
-          const participant = summoner.activeGame.data.participants.find((item: any) => item.summonerId === summoner.summonerId);
-          summoner['champion'] = `https://cdn.communitydragon.org/11.12.1/champion/${participant.championId}/square`;
-          summoner['gameId'] = summoner.activeGame.data.gameId;
-          summoner['observerKey'] = summoner.activeGame.data.observers.encryptionKey;
+      for (let i = 0; i < this.summoners.length; i++) {
+        this.summoners[i]['position'] = i + 1;
+        if (this.summoners[i].activeGame.status) {
+          const participant = this.summoners[i].activeGame.data.participants.find((item: any) => item.summonerId === this.summoners[i].summonerId);
+          this.summoners[i]['champion'] = `https://cdn.communitydragon.org/11.12.1/champion/${participant.championId}/square`;
+          this.summoners[i]['gameId'] = this.summoners[i].activeGame.data.gameId;
+          this.summoners[i]['observerKey'] = this.summoners[i].activeGame.data.observers.encryptionKey;
         }
       }
+      this.onFilter();
     }, (error: any) => {
       this.dataLoaded = true;
       this.loading = false;
@@ -89,5 +96,17 @@ export class LeaderboardComponent implements OnInit {
       a.download = `riftmaker-spectate-${summoner.gameId}.bat`;
       a.click();
     });
+  }
+
+  onChangeActiveGameFilter() {
+    this.activeGameFilter = !this.activeGameFilter;
+    this.onFilter();
+  }
+
+  onFilter() {
+    this.filteredSummoners = this.summoners;
+    if (this.activeGameFilter) {
+      this.filteredSummoners = this.summoners.filter((summoner: any) => summoner.activeGame.status);
+    }
   }
 }
