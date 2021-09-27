@@ -34,7 +34,7 @@ export class LeaderboardComponent implements OnInit {
 
   connectWebSocket(): void {
     let subject = webSocket(`${this.wsUrl}`);
-    subject.subscribe((message: any) => this.onMessage(message), (error: any) => this.onError(error), () => console.log('complete'));
+    subject.subscribe((message: any) => this.onMessage(message), (error: any) => console.log(error), () => console.log('complete'));
   }
 
   onMessage(message: any): void {
@@ -64,10 +64,6 @@ export class LeaderboardComponent implements OnInit {
     }
   }
 
-  onError(error: any): void {
-    console.log(error)
-  }
-
   getSummoners(): void {
     this.loading = true;
     const startTime = new Date().getTime();
@@ -94,6 +90,14 @@ export class LeaderboardComponent implements OnInit {
     });
   }
 
+  formatGameLength(gameLength: number) {
+    let minutes: any = Math.floor(gameLength / 60);
+    let seconds: any = gameLength - minutes * 60;
+    if (minutes < 10) { minutes = `0${minutes}`}
+    if (seconds < 10) { seconds = `0${seconds}`}
+    return `${minutes}:${seconds}`;
+  }
+
   getSummoner(summoner: any): void {
     const url = this.router.serializeUrl(this.router.createUrlTree([`/summoner/${summoner.summonerName}`]));
     window.open(url, '_blank');
@@ -112,19 +116,19 @@ export class LeaderboardComponent implements OnInit {
     });
   }
 
-  onChangeActiveGameFilter() {
+  onChangeActiveGameFilter(): void {
     this.activeGameFilter = !this.activeGameFilter;
     this.onFilter();
   }
 
-  onFilter() {
+  onFilter(): void {
     this.filteredSummoners = this.summoners;
     if (this.activeGameFilter) {
       this.filteredSummoners = this.summoners.filter((summoner: any) => summoner.activeGame.status);
     }
   }
 
-  sortSummoners() {
+  sortSummoners(): void {
     this.summoners.sort((a, b) => b.leaguePoints - a.leaguePoints);
     for (let i = 0; i < this.summoners.length; i++) {
       this.summoners[i]['position'] = i + 1;

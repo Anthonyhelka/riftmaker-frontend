@@ -11,6 +11,7 @@ import { WhoopsComponent } from './pages/whoops/whoops.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LeaderboardComponent } from './pages/leaderboard/leaderboard.component';
 import { FormsModule } from '@angular/forms';
+import { MatchTimerComponent } from './components/match-timer/match-timer.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     SummonerComponent,
     WhoopsComponent,
-    LeaderboardComponent
+    LeaderboardComponent,
+    MatchTimerComponent
   ],
   imports: [
     BrowserModule,

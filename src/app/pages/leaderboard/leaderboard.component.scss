@@ -4,40 +4,44 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin-top: 20px;
   }
   .l-summoners {
-    width: 500px;
-    max-height: 500px;
-    display: flex;
-    flex-direction: column;
+    width: 80%;
     margin: auto;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    margin-top: 20px;
+    border-collapse: collapse;
+    text-align: center;
+    background-color: #FFFFFF;
+    thead {
+      height: 48px;
+      color: rgba(0,0,0,.54);
+      font-size: 13px;
+      border-bottom: 1px solid;
+      th {
+        width: 12.5%;
+        font-weight: normal;
+      }
+    }
     .l-summoner {
-      height: 30px;
-      min-height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 10px;
-      transition: background-color 0.1s ease-in;
-      cursor: pointer;
-      .l-summoner-champion {
-        height: 100%;
-        margin-left: 15px;
+      height: 48px;
+      color: #000000;
+      font-size: 14px;
+      border-bottom: 1px solid;
+      .l-summoner-status {
+        width: 12px;
+        height: 12px;
+        margin: auto;
+        border-radius: 100px;
+        background-color: #F45959;
       }
-      .l-summoner-spectate {
-        margin-left: 15px;
+      img {
+        width: 35px;
+        height: 35px;
       }
     }
-    .unknown {
-      background-color: lightblue;
-    }
-    .false {
-      background-color: lightcoral;
-    }
-    .true {
-      background-color: lightgreen;
+    .l-summoner:nth-child(even) {
+      background-color: #F5F5F5;
     }
   }
 }

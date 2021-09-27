@@ -13,20 +13,45 @@
         (Currently showing {{ filteredSummoners.length }} summoners)
       </ng-container>
     </div>
-    <div class="l-summoners">
-      <div
-        *ngFor="let summoner of filteredSummoners; let i = index;"
-        class="l-summoner"
-        [ngClass]="{ 'false': !summoner.activeGame.status, 'true': summoner.activeGame.status }"
-        (click)="getSummoner(summoner)">
-        {{ summoner.position }}: {{ summoner.summonerName }} ({{ summoner.leaguePoints }}LP)
-        <img
-          *ngIf="summoner.activeGame.status"
-          class="l-summoner-champion"
-          [src]="summoner.champion"
-          [alt]="summoner.summonerName + ' Champion'" />
-        <button *ngIf="summoner.activeGame.status" class="l-summoner-spectate" (click)="getSpectateFile($event, summoner)">Spectate</button>
-      </div>
-    </div>
+    <!-- <div class="l-summoners">
+      <app-leaderboard-card *ngFor="let summoner of filteredSummoners" [summoner]="summoner"></app-leaderboard-card>
+    </div> -->
+
+    <table class="l-summoners">
+      <thead>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Tier</th>
+        <th>LP</th>
+        <th>In Game</th>
+        <th>Champion</th>
+        <th>Game Time</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let summoner of filteredSummoners" class="l-summoner" [ngClass]="{ 'false': !summoner.activeGame.status, 'true': summoner.activeGame.status }">
+          <td>{{ summoner.position }}</td>
+          <td>{{ summoner.summonerName }}</td>
+          <td>{{ summoner.tier }}</td>
+          <td>{{ summoner.leaguePoints }}</td>
+          <td>
+            <ng-container *ngIf="!summoner.activeGame.status">-</ng-container>
+            <div *ngIf="summoner.activeGame.status" class="l-summoner-status red-pulse"></div>
+          </td>
+          <td>
+            <ng-container *ngIf="!summoner.activeGame.status">-</ng-container>
+            <img *ngIf="summoner.activeGame.status" class="l-summoner-champion" [src]="summoner.champion" [alt]="summoner.summonerName + ' Champion'" />
+          </td>
+          <td>
+            <ng-container *ngIf="!summoner.activeGame.status">-</ng-container>
+            <ng-container *ngIf="summoner.activeGame.status"><app-match-timer [summoner]="summoner"></app-match-timer></ng-container>
+          </td>
+          <td>
+            <ng-container *ngIf="!summoner.activeGame.status">-</ng-container>
+            <button *ngIf="summoner.activeGame.status" class="l-summoner-spectate" (click)="getSpectateFile($event, summoner)">Spectate</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </ng-container>
 </div>
