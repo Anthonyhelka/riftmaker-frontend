@@ -12,10 +12,9 @@ import { environment } from 'src/environments/environment';
 export class LeaderboardComponent implements OnInit {
   summoners: any[] = [];
   filteredSummoners: any[] = [];
-  summonerLimit: number = 75;
 
   // Filters
-  activeGameFilter: boolean = false;
+  activeGameFilter: boolean = true;
 
   // Loading
   updating: boolean = false;
@@ -39,14 +38,29 @@ export class LeaderboardComponent implements OnInit {
   }
 
   onMessage(message: any): void {
-    console.log(message);
-    if (message.status === 'updating') {
+    if (message.status === 'startUpdate') {
       this.updating = true;
     }
-    if (message.status === 'updated') {
+    if (message.status === 'summonerUpdate') {
+      if (this.dataLoaded) {
+        const summonerIndex = this.summoners.findIndex((item: any) => item.summonerId === message.data.summonerId);
+        if (this.summoners[summonerIndex].activeGame.status && !message.data.activeGame.status) {
+          console.log(`NO LONGER IN GAME: ${this.summoners[summonerIndex].summonerName}`);
+        }
+        this.summoners[summonerIndex] = message.data;
+        if (this.summoners[summonerIndex].activeGame.status) {
+          console.log(`CURRENTLY IN GAME: ${this.summoners[summonerIndex].summonerName}`);
+          const participant = this.summoners[summonerIndex].activeGame.data.participants.find((item: any) => item.summonerId === this.summoners[summonerIndex].summonerId);
+          this.summoners[summonerIndex]['champion'] = `https://cdn.communitydragon.org/11.19.1/champion/${participant.championId}/square`;
+          this.summoners[summonerIndex]['gameId'] = this.summoners[summonerIndex].activeGame.data.gameId;
+          this.summoners[summonerIndex]['observerKey'] = this.summoners[summonerIndex].activeGame.data.observers.encryptionKey;
+        }
+        this.sortSummoners();
+        this.onFilter();
+      }
+    }
+    if (message.status === 'finishUpdate') {
       this.updating = false;
-      this.lastUpdated = new Date(message.timestamp);
-      this.getSummoners();
     }
   }
 
@@ -62,15 +76,15 @@ export class LeaderboardComponent implements OnInit {
       this.loading = false;
       this.loadTime = (new Date().getTime() - startTime) / 1000;
       this.summoners = resBody;
-      for (let i = 0; i < this.summoners.length; i++) {
-        this.summoners[i]['position'] = i + 1;
-        if (this.summoners[i].activeGame.status) {
-          const participant = this.summoners[i].activeGame.data.participants.find((item: any) => item.summonerId === this.summoners[i].summonerId);
-          this.summoners[i]['champion'] = `https://cdn.communitydragon.org/11.12.1/champion/${participant.championId}/square`;
-          this.summoners[i]['gameId'] = this.summoners[i].activeGame.data.gameId;
-          this.summoners[i]['observerKey'] = this.summoners[i].activeGame.data.observers.encryptionKey;
+      for (let summoner of this.summoners) {
+        if (summoner.activeGame.status) {
+          const participant = summoner.activeGame.data.participants.find((item: any) => item.summonerId === summoner.summonerId);
+          summoner['champion'] = `https://cdn.communitydragon.org/11.19.1/champion/${participant.championId}/square`;
+          summoner['gameId'] = summoner.activeGame.data.gameId;
+          summoner['observerKey'] = summoner.activeGame.data.observers.encryptionKey;
         }
       }
+      this.sortSummoners();
       this.onFilter();
     }, (error: any) => {
       this.dataLoaded = true;
@@ -107,6 +121,13 @@ export class LeaderboardComponent implements OnInit {
     this.filteredSummoners = this.summoners;
     if (this.activeGameFilter) {
       this.filteredSummoners = this.summoners.filter((summoner: any) => summoner.activeGame.status);
+    }
+  }
+
+  sortSummoners() {
+    this.summoners.sort((a, b) => b.leaguePoints - a.leaguePoints);
+    for (let i = 0; i < this.summoners.length; i++) {
+      this.summoners[i]['position'] = i + 1;
     }
   }
 }

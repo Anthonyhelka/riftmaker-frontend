@@ -13,7 +13,6 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     const path = this.location.path();
-    console.log(path)
     if (path === '/' || path.includes('home')) {
       this.path = 'home';
     } else if (path.includes('leaderboard')) {
