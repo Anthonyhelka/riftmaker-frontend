@@ -38,6 +38,9 @@ export class LeaderboardComponent implements OnInit {
   }
 
   onMessage(message: any): void {
+    if (message.status === 'ping') {
+      console.log(message);
+    }
     if (message.status === 'startUpdate') {
       this.updating = true;
     }
